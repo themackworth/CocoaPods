@@ -64,6 +64,7 @@ module Pod
           dirname = '$(PODS_ROOT)/' + framework_path.dirname.relative_path_from(sandbox_root).to_s
           build_settings = {
             'OTHER_LDFLAGS' => "-framework #{name}",
+            'OTHER_LIBTOOLFLAGS' => "-framework #{name}",
             'FRAMEWORK_SEARCH_PATHS' => quote([dirname]),
           }
           xcconfig.merge!(build_settings)
@@ -83,6 +84,7 @@ module Pod
           dirname = '$(PODS_ROOT)/' + library_path.dirname.relative_path_from(sandbox_root).to_s
           build_settings = {
             'OTHER_LDFLAGS' => "-l#{name}",
+            'OTHER_LIBTOOLFLAGS' => "-l#{name}",
             'LIBRARY_SEARCH_PATHS' => quote([dirname]),
           }
           xcconfig.merge!(build_settings)

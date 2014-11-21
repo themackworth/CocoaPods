@@ -50,7 +50,7 @@ module Pod
           header_search_path_flags = target.sandbox.public_headers.search_paths(target.platform)
           @xcconfig = Xcodeproj::Config.new(
                                               'OTHER_LDFLAGS' => XCConfigHelper.default_ld_flags(target),
-                                              'OTHER_LIBTOOLFLAGS' => '$(OTHER_LDFLAGS)',
+                                              'OTHER_LIBTOOLFLAGS' => '',
                                               'HEADER_SEARCH_PATHS' => XCConfigHelper.quote(header_search_path_flags),
                                               'PODS_ROOT' => target.relative_pods_root,
                                               'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) COCOAPODS=1',
@@ -73,7 +73,7 @@ module Pod
             # Add pod static lib to list of libraries that are to be linked with
             # the user’s project.
 
-            @xcconfig.merge!('OTHER_LDFLAGS' => %(-l "#{pod_target.name}"))
+            @xcconfig.merge!('OTHER_LDFLAGS' => %(-l "#{pod_target.name}"), 'OTHER_LIBTOOLFLAGS' => %(-l"#{pod_target.name}"))
           end
 
           # TODO Need to decide how we are going to ensure settings like these
